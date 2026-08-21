@@ -1,5 +1,6 @@
 import express from 'express';
 import type { Request, Response } from 'express';
+import { join } from 'node:path';
 import { loadEnv } from './config/env.js';
 import { logger } from './utils/logger.js';
 import { loadKeywordRules } from './services/keyword.service.js';
@@ -31,6 +32,13 @@ app.get('/health', (_req: Request, res: Response) => {
     uptime: process.uptime(),
     version: process.env.npm_package_version ?? '1.0.0',
   });
+});
+
+// Privacy policy. Meta requires a public URL for it before the app can go live,
+// and asks for a data deletion URL too — the #eliminacion anchor covers that.
+const privacyPage = join(process.cwd(), 'public', 'privacidad.html');
+app.get(['/privacidad', '/privacy'], (_req: Request, res: Response) => {
+  res.sendFile(privacyPage);
 });
 
 // Webhook routes

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de privacidad · Respondedor</title>
+<style>
+  :root {
+    --bg: #FAFAF9;
+    --surface: #FFFFFF;
+    --text: #1C1F21;
+    --muted: #5B6469;
+    --line: #E2E4E1;
+    --accent: #2C5B84;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131517;
+      --surface: #1B1E21;
+      --text: #E9E8E4;
+      --muted: #A2A9AE;
+      --line: #2E3236;
+      --accent: #7FAED6;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+  header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 24px;
+    margin-bottom: 36px;
+  }
+  h1 { font-size: 32px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -0.02em; }
+  .meta { color: var(--muted); font-size: 15px; margin: 0; }
+  h2 {
+    font-size: 21px;
+    margin: 40px 0 12px;
+    letter-spacing: -0.01em;
+  }
+  p, li { color: var(--text); }
+  ul { padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  .box {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin: 24px 0;
+  }
+  .box p:last-child { margin-bottom: 0; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 16px; }
+  th {
+    text-align: left;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    padding: 0 12px 8px 0;
+  }
+  td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>Política de privacidad</h1>
+  <p class="meta">Aplicación <strong>Respondedor</strong> · Última actualización: 20 de agosto de 2026</p>
+</header>
+
+<p>Esta página explica qué información recoge la aplicación <strong>Respondedor</strong>, para qué se usa y cómo puedes pedir que se elimine. Respondedor es un asistente automático que responde comentarios y mensajes directos en una cuenta profesional de Instagram.</p>
+
+<h2>Quién es responsable de tus datos</h2>
+<p>Juan David Sierra, operador de la cuenta de Instagram desde la que se ejecuta esta aplicación. Puedes escribir a <a href="mailto:juandasierra111@gmail.com">juandasierra111@gmail.com</a> para cualquier asunto relacionado con tus datos.</p>
+
+<h2>Qué información se recoge</h2>
+<p>Solo se guarda información de personas que interactúan por su propia iniciativa con la cuenta: quien comenta una publicación o envía un mensaje directo.</p>
+
+<table>
+  <thead>
+    <tr><th>Dato</th><th>De dónde sale</th><th>Por qué</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Identificador y nombre de usuario de Instagram</td>
+      <td>Lo entrega Instagram junto con el comentario o el mensaje</td>
+      <td>Para poder responderte y no enviarte el mismo mensaje dos veces</td>
+    </tr>
+    <tr>
+      <td>Texto del comentario o del mensaje</td>
+      <td>Lo escribes tú</td>
+      <td>Para reconocer la palabra clave y saber qué recurso pediste</td>
+    </tr>
+    <tr>
+      <td>Dirección de correo electrónico</td>
+      <td>Solo si tú decides escribirla en la conversación</td>
+      <td>Para enviarte el recurso que solicitaste</td>
+    </tr>
+    <tr>
+      <td>Registro de mensajes enviados y recibidos</td>
+      <td>Lo genera la propia aplicación</td>
+      <td>Para dar seguimiento a la conversación y diagnosticar fallos</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box">
+  <p><strong>Nunca se recoge:</strong> tu contraseña, tu lista de contactos, tus mensajes con otras personas, tu ubicación, ni ningún dato de pago. La aplicación solo ve las conversaciones que tú inicias con esta cuenta.</p>
+</div>
+
+<h2>Para qué se usa</h2>
+<ul>
+  <li>Responder automáticamente a tu comentario o mensaje.</li>
+  <li>Enviarte por mensaje directo, y por correo si lo facilitaste, el recurso que pediste.</li>
+  <li>Evitar enviarte mensajes repetidos.</li>
+  <li>Mantener el servicio funcionando y detectar errores.</li>
+</ul>
+<p>Tus datos no se venden, no se alquilan y no se entregan a terceros con fines publicitarios.</p>
+
+<h2>Dónde se guardan</h2>
+<p>En una base de datos PostgreSQL alojada en <a href="https://railway.com" rel="noopener">Railway</a>, con acceso restringido al responsable de la aplicación.</p>
+
+<h2>Con quién se comparten</h2>
+<ul>
+  <li><strong>Meta Platforms</strong>: es la plataforma sobre la que ocurre la conversación. Se rige por la <a href="https://privacycenter.instagram.com/policy" rel="noopener">política de privacidad de Instagram</a>.</li>
+  <li><strong>Railway</strong>: proveedor de la infraestructura donde corre el servidor y la base de datos.</li>
+  <li><strong>Resend</strong>: proveedor de envío de correo, únicamente si facilitaste tu dirección y solo para entregarte lo que pediste.</li>
+</ul>
+<p>Ningún otro tercero recibe esta información.</p>
+
+<h2>Cuánto tiempo se conserva</h2>
+<p>Los datos se conservan mientras sean útiles para la relación que iniciaste, y se eliminan cuando lo solicitas. El registro técnico de mensajes se conserva un máximo de doce meses.</p>
+
+<h2 id="eliminacion">Cómo eliminar tus datos</h2>
+<div class="box">
+  <p>Escribe a <a href="mailto:juandasierra111@gmail.com">juandasierra111@gmail.com</a> desde el correo que facilitaste, o envía un mensaje directo a la cuenta de Instagram con la palabra <strong>ELIMINAR</strong>, indicando tu nombre de usuario.</p>
+  <p>Tus datos se borrarán de la base de datos en un plazo máximo de 30 días y recibirás confirmación. La eliminación es completa: no se conservan copias.</p>
+</div>
+
+<h2>Tus derechos</h2>
+<p>Puedes pedir en cualquier momento acceder a los datos que se tienen sobre ti, corregirlos si están equivocados, eliminarlos, o retirar tu consentimiento para recibir correos. Basta con escribir a la dirección indicada arriba.</p>
+
+<h2>Menores de edad</h2>
+<p>Esta aplicación no está dirigida a menores de 13 años y no recoge datos de forma consciente de personas de esa edad. Si detectas un caso así, escríbenos y se eliminará de inmediato.</p>
+
+<h2>Cambios en esta política</h2>
+<p>Si esta política cambia, se actualizará la fecha del encabezado. Los cambios relevantes se anunciarán en la cuenta de Instagram.</p>
+
+<footer>
+  Respondedor · Servido desde el propio servidor de la aplicación · Contacto: <a href="mailto:juandasierra111@gmail.com">juandasierra111@gmail.com</a>
+</footer>
+
+</main>
+</body>
+</html>

@@ -19,6 +19,7 @@ RUN npm ci --omit=dev
 COPY --from=builder /app/dist ./dist
 COPY keywords.json ./
 COPY email-templates/ ./email-templates/
+COPY public/ ./public/
 
 ENV NODE_ENV=production
 
