@@ -1,7 +1,7 @@
 import type { MetaCommentValue } from '../types/meta.types.js';
 import { matchKeyword } from '../services/keyword.service.js';
 import { isOnCooldown, isRateLimited, recordTrigger } from '../services/cooldown.service.js';
-import { sendTextDM, sendButtonDM } from '../services/instagram.service.js';
+import { sendTextDM, sendButtonDM, sendPrivateReply } from '../services/instagram.service.js';
 import { renderTemplate } from '../utils/templates.js';
 import { logger } from '../utils/logger.js';
 import { upsertLead } from '../services/lead.service.js';
@@ -59,13 +59,13 @@ export async function handleComment(comment: MetaCommentValue): Promise<void> {
   const vars = { username };
   const renderedText = renderTemplate(rule.response.text, vars);
 
-  // 6. Send DM
+  // 6. Send the DM as a private reply to the comment.
+  //    Meta only allows DMing someone who has never written to the account
+  //    through a private reply (7-day window, one per comment). A direct DM
+  //    by user id would be rejected outside the 24h messaging window.
   try {
-    if (rule.response.type === 'button' && rule.response.buttons?.length) {
-      await sendButtonDM(userId, renderedText, rule.response.buttons);
-    } else {
-      await sendTextDM(userId, renderedText);
-    }
+    const buttons = rule.response.type === 'button' ? rule.response.buttons : undefined;
+    await sendPrivateReply(commentId, userId, renderedText, buttons);
 
     // 7. Record trigger & log DM
     recordTrigger(userId, rule.id);

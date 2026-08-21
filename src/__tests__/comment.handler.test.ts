@@ -8,10 +8,12 @@ import type { KeywordRule } from '../types/keyword.types.js';
 // Mock instagram service
 const mockSendTextDM = vi.fn().mockResolvedValue({ recipient_id: '123', message_id: 'm1' });
 const mockSendButtonDM = vi.fn().mockResolvedValue({ recipient_id: '123', message_id: 'm2' });
+const mockSendPrivateReply = vi.fn().mockResolvedValue({ recipient_id: '123', message_id: 'm3' });
 
 vi.mock('../services/instagram.service.js', () => ({
   sendTextDM: (...args: unknown[]) => mockSendTextDM(...args),
   sendButtonDM: (...args: unknown[]) => mockSendButtonDM(...args),
+  sendPrivateReply: (...args: unknown[]) => mockSendPrivateReply(...args),
   getUserProfile: vi.fn().mockResolvedValue({ id: '123', username: 'testuser' }),
 }));
 
@@ -81,60 +83,74 @@ describe('comment.handler', () => {
     loadKeywordRules(path);
   });
 
-  it('sends button DM when keyword matches with buttons', async () => {
-    await handleComment(makeComment('quiero la CLASE'));
+  it('replies privately with buttons when keyword matches with buttons', async () => {
+    const comment = makeComment('quiero la CLASE');
+    await handleComment(comment);
 
-    expect(mockSendButtonDM).toHaveBeenCalledOnce();
-    expect(mockSendButtonDM).toHaveBeenCalledWith(
+    expect(mockSendPrivateReply).toHaveBeenCalledOnce();
+    expect(mockSendPrivateReply).toHaveBeenCalledWith(
+      comment.id,
       'user1',
       'Hola testuser! Aca te dejo el link:',
       testRules[0].response.buttons,
     );
   });
 
-  it('sends text DM when keyword matches without buttons', async () => {
-    await handleComment(makeComment('tell me about AI'));
+  it('replies privately with plain text when the rule has no buttons', async () => {
+    const comment = makeComment('tell me about AI');
+    await handleComment(comment);
 
-    expect(mockSendTextDM).toHaveBeenCalledOnce();
-    expect(mockSendTextDM).toHaveBeenCalledWith(
+    expect(mockSendPrivateReply).toHaveBeenCalledOnce();
+    expect(mockSendPrivateReply).toHaveBeenCalledWith(
+      comment.id,
       'user1',
       'Hola testuser! Info sobre AI:',
+      undefined,
     );
+  });
+
+  it('never DMs by user id from a comment (24h window would reject it)', async () => {
+    await handleComment(makeComment('quiero la CLASE'));
+
+    expect(mockSendTextDM).not.toHaveBeenCalled();
+    expect(mockSendButtonDM).not.toHaveBeenCalled();
   });
 
   it('does not send DM when no keyword matches', async () => {
     await handleComment(makeComment('hello world'));
 
-    expect(mockSendTextDM).not.toHaveBeenCalled();
-    expect(mockSendButtonDM).not.toHaveBeenCalled();
+    expect(mockSendPrivateReply).not.toHaveBeenCalled();
   });
 
   it('respects cooldown — does not send duplicate DM', async () => {
     await handleComment(makeComment('CLASE'));
     await handleComment(makeComment('CLASE'));
 
-    expect(mockSendButtonDM).toHaveBeenCalledOnce();
+    expect(mockSendPrivateReply).toHaveBeenCalledOnce();
   });
 
   it('allows DM to different user even if same keyword', async () => {
     await handleComment(makeComment('CLASE', 'user1', 'user1'));
     await handleComment(makeComment('CLASE', 'user2', 'user2'));
 
-    expect(mockSendButtonDM).toHaveBeenCalledTimes(2);
+    expect(mockSendPrivateReply).toHaveBeenCalledTimes(2);
   });
 
   it('renders {{username}} template', async () => {
-    await handleComment(makeComment('tell me about AI', 'user1', 'juancadile'));
+    const comment = makeComment('tell me about AI', 'user1', 'juancadile');
+    await handleComment(comment);
 
-    expect(mockSendTextDM).toHaveBeenCalledWith(
+    expect(mockSendPrivateReply).toHaveBeenCalledWith(
+      comment.id,
       'user1',
       'Hola juancadile! Info sobre AI:',
+      undefined,
     );
   });
 
   it('matches aliases (IA → ai rule)', async () => {
     await handleComment(makeComment('me gusta la IA'));
 
-    expect(mockSendTextDM).toHaveBeenCalledOnce();
+    expect(mockSendPrivateReply).toHaveBeenCalledOnce();
   });
 });
